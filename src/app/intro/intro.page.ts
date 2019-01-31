@@ -16,7 +16,7 @@ export class IntroPage implements OnInit {
   }
 
   finish(){
-    this.navCtrl.navigateRoot('signIn')
+    this.navCtrl.navigateRoot('signIn');
   }
 
 }
