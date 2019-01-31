@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as firebase from 'firebase'
 
 @Component({
   selector: 'app-tab1',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+
+
+  logout() {
+  
+    firebase.auth().signOut();
+  }
     
 }
