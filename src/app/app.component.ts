@@ -1,49 +1,60 @@
 import { Component } from '@angular/core';
 
-import { Platform, NavController } from '@ionic/angular';
+import { Platform, NavController, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+
+  loader:any;
+
   constructor(
+    private fbAuth: AngularFireAuth,
     private navCtrl: NavController,
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public loadingController: LoadingController
   ) {
     this.initializeApp();
   }
 
-  initializeApp() {
+  async initializeApp() {
+
+    await this.loading('Loading');
+
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      var config = {
-        apiKey: "AIzaSyBRkuz9w0HlMQ6zlZZr9FoTqmmwt0wAJb4",
-        authDomain: "safe-cities-app.firebaseapp.com",
-        databaseURL: "https://safe-cities-app.firebaseio.com",
-        projectId: "safe-cities-app",
-        storageBucket: "safe-cities-app.appspot.com",
-        messagingSenderId: "621214668979"
-      };
-      firebase.initializeApp(config);
+      this.loader.dismiss();
       
-      firebase.auth().onAuthStateChanged((user)=> {
+      this.fbAuth.auth.onAuthStateChanged(user => {
         if (user) {
-         this.navCtrl.navigateRoot('');
+          this.navCtrl.navigateRoot('');
         } else {
-          this.navCtrl.navigateRoot('intro');
+          this.navCtrl.navigateRoot('signIn');
         }
-        // firebase.auth().signInWithEmailAndPassword('jaimemezatx@gmail.com','12345678')
-        // .then(resp => console.log('logged'));   
       })
-  
+
     });
   }
+
+  // Loading message
+  async loading(msg) {
+    this.loader= await this.loadingController.create({
+      message: msg,
+      translucent: true,
+    });
+    this.loader.present();
+  }
+
+
+
+  
 }

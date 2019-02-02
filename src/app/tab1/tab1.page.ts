@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import * as firebase from 'firebase'
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-tab1',
@@ -8,10 +8,10 @@ import * as firebase from 'firebase'
 })
 export class Tab1Page {
 
+  constructor(private authServ: AuthService) { }
 
   logout() {
-  
-    firebase.auth().signOut();
+    this.authServ.signOut();
   }
-    
+
 }
