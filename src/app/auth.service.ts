@@ -19,6 +19,22 @@ export class AuthService {
   signOut() {
     return this.fbAuth.auth.signOut();
   }
+
+  signUp(email, pass) {
+    return this.fbAuth.auth.createUserWithEmailAndPassword(email, pass);
+  }
+
+  sendEmailVerification() {
+    return this.fbAuth.auth.currentUser.sendEmailVerification();
+  }
+
+  updateProfile(name) {
+    this.fbAuth.auth.currentUser.updateProfile({
+      displayName: name,
+      photoURL: ""
+    })
+  }
+  
 }
 
 

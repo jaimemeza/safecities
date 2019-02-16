@@ -14,4 +14,8 @@ export class Tab1Page {
     this.authServ.signOut();
   }
 
+  alert() {
+    console.log('Alert');
+  }
+
 }

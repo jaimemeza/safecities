@@ -1,9 +1,29 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      Tab Three
+      User Information
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-note slot="start">Name</ion-note>
+      <ion-label>{{ this.userInfo.name }}</ion-label>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-note slot="start">Email</ion-note>
+      <ion-label>{{ this.userInfo.email }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+      <ion-button expand="block" color="danger" (click)="this.auth.signOut()">
+          Logoff
+        </ion-button>
+  </ion-toolbar>
+</ion-footer>
