@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -16,7 +16,8 @@ export class SigninPage implements OnInit {
   constructor(
     public authServ: AuthService,
     private formBuilder: FormBuilder,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    public modalCtrl: ModalController
   ) {
     this.todo = this.formBuilder.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^(\[a-zA-Z0-9\]+\[a-zA-Z0-9._%\\-\\+\]*@(?:\[a-zA-Z0-9-\]+\\.)+\[a-zA-Z\]{2,4})$')])),

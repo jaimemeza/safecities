@@ -14,7 +14,8 @@ export class SignupPage implements OnInit {
 
   constructor(
     public authServ: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private navCtrl: NavController
   ) {
     this.todo = this.formBuilder.group({
       name: new FormControl('', Validators.compose([Validators.required, Validators.maxLength(12)])),
@@ -30,8 +31,10 @@ export class SignupPage implements OnInit {
     await this.authServ.signUp(this.todo.value.email, this.todo.value.password)
     .then(() => this.authServ.updateProfile(this.todo.value.name))
     .then(() => this.authServ.sendEmailVerification())
+  }
 
-
+  goBack() {
+    this.navCtrl.back();
   }
 
 }
