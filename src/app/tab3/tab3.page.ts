@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -7,10 +7,9 @@ import { AuthService } from '../auth.service';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  userInfo: any;
   constructor(
-    public auth: AuthService
+    public auth: AuthService,
+    public change: ChangeDetectorRef,
   ) {
-    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
   }
 }

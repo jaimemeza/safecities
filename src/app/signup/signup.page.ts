@@ -29,8 +29,8 @@ export class SignupPage implements OnInit {
 
   async logForm() {
     await this.authServ.signUp(this.todo.value.email, this.todo.value.password)
-    .then(() => this.authServ.updateProfile(this.todo.value.name))
-    .then(() => this.authServ.sendEmailVerification())
+      .then(() => this.authServ.updateProfile(this.todo.value.name))
+      .then(() => this.authServ.sendEmailVerification())
   }
 
   goBack() {

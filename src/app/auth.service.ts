@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  userInfo: any;
   constructor(
-    private fbAuth: AngularFireAuth,
-    private db: AngularFireDatabase
+    private fbAuth: AngularFireAuth
   ) { }
 
   signIn(email, pass) {

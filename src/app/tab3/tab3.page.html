@@ -10,12 +10,17 @@
   <ion-list>
     <ion-item>
       <ion-note slot="start">Name</ion-note>
-      <ion-label>{{ this.userInfo.name }}</ion-label>
+      <ion-label>{{ this.auth.userInfo.name }}</ion-label>
     </ion-item>
     <br>
     <ion-item>
       <ion-note slot="start">Email</ion-note>
-      <ion-label>{{ this.userInfo.email }}</ion-label>
+      <ion-label>{{ this.auth.userInfo.email }}</ion-label>
+    </ion-item>
+  <br>
+    <ion-item>
+      <ion-note slot="start">Trust</ion-note>
+      <ion-label>{{ this.auth.userInfo.trust }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

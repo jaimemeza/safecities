@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Platform, NavController, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from './auth.service';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Tab3Page } from './tab3/tab3.page';
 
 
 @Component({
@@ -13,10 +15,11 @@ import { AuthService } from './auth.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-
   loader: any;
 
   constructor(
+    private change: ChangeDetectorRef,
+    private db: AngularFireDatabase,
     private auth: AuthService,
     private fbAuth: AngularFireAuth,
     private navCtrl: NavController,
@@ -35,14 +38,16 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.fbAuth.auth.onAuthStateChanged(user => {
+      this.fbAuth.auth.onAuthStateChanged(async user => {
         // Check if the user exist and if the email have been verified
         if (user && user.emailVerified) {
-          let userInfo = {
+          this.auth.userInfo = {
             name: user.displayName,
-            email: user.email
+            email: user.email,
+            uid: user.uid
           }
-          this.saveInfo(userInfo);
+          await this.isTrust(this.auth.userInfo.uid);
+          await this.updateName(this.auth.userInfo.uid, this.auth.userInfo.name);
           // Uncomment when run on real device
           // .then(()=> {console.log('Saved')})
           // .catch(err => {console.log('Not saved ' + err)})
@@ -53,6 +58,7 @@ export class AppComponent {
           this.auth.signOut();
           this.navCtrl.navigateRoot('signIn');
         } else {
+          this.delUserInfo();
           this.navCtrl.navigateRoot('signIn');
         }
         this.loader.dismiss();
@@ -70,14 +76,31 @@ export class AppComponent {
     this.loader.present();
   }
 
-  // Save information locally
-  saveInfo(info) {
+  // Save user information locally
+  saveUserInfo(info) {
     // Uncomment when run on real device
     // return this.storage.setItem('userInfo',info);
     return localStorage.setItem('userInfo', JSON.stringify(info));
   }
 
+  // Delete user information
+  delUserInfo() {
+    // Uncomment when run on real device
+    // return this.storage.removeItem('userInfo');
+    return localStorage.removeItem('userInfo');
+  }
 
+  updateName(uid, name) {
+    return this.db.database.ref(`users/${uid}`).update({ displayName: name })
+  }
 
+  isTrust(uid) {
+    this.db.object(`users/${uid}`).query.on('value', snap => {
+      this.auth.userInfo['admin'] = snap.val().admin;
+      this.auth.userInfo['trust'] = snap.val().trust;
+      this.saveUserInfo(this.auth.userInfo);
+      this.change.detectChanges();
+    })
+  }
 
 }
