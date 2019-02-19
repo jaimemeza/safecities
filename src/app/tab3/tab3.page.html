@@ -7,20 +7,22 @@
 </ion-header>
 
 <ion-content>
+  <br>
   <ion-list>
     <ion-item>
-      <ion-note slot="start">Name</ion-note>
+      <ion-note slot="start">Name:</ion-note>
       <ion-label>{{ this.auth.userInfo.name }}</ion-label>
     </ion-item>
     <br>
     <ion-item>
-      <ion-note slot="start">Email</ion-note>
+      <ion-note slot="start">Email:</ion-note>
       <ion-label>{{ this.auth.userInfo.email }}</ion-label>
     </ion-item>
   <br>
     <ion-item>
-      <ion-note slot="start">Trust</ion-note>
-      <ion-label>{{ this.auth.userInfo.trust }}</ion-label>
+      <ion-note slot="start">Trust:</ion-note>
+      <ion-label [hidden]="!this.auth.userInfo.trust">Yes</ion-label>
+      <ion-label [hidden]="this.auth.userInfo.trust">No</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

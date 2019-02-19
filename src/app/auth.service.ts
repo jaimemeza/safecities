@@ -5,7 +5,11 @@ import { AngularFireAuth } from '@angular/fire/auth';
   providedIn: 'root'
 })
 export class AuthService {
-  userInfo: any;
+  userInfo: any = {
+    admin: false,
+    trust: true,
+    
+  };
   constructor(
     private fbAuth: AngularFireAuth
   ) { }

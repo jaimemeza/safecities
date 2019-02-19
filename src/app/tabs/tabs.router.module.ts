@@ -35,6 +35,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'admin',
+        children: [
+          {
+            path: '',
+            loadChildren: '../admin/admin.module#AdminPageModule'
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

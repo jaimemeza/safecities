@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -8,14 +9,17 @@ import { AuthService } from '../auth.service';
 })
 export class Tab1Page {
 
-  constructor(private authServ: AuthService) { }
+  constructor(
+    private authServ: AuthService,
+    private navCtrl: NavController
+    ) { }
 
   logout() {
     this.authServ.signOut();
   }
 
   alert() {
-    console.log('Alert');
+    this.navCtrl.navigateForward('add-channel');
   }
 
 }

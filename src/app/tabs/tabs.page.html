@@ -15,6 +15,11 @@
       <ion-icon name="person"></ion-icon>
       <ion-label>Info</ion-label>
     </ion-tab-button>
+
+    <ion-tab-button [hidden]="!this.auth.userInfo.admin" tab="admin">
+      <ion-icon name="construct"></ion-icon>
+      <ion-label>Admin</ion-label>
+    </ion-tab-button>
   </ion-tab-bar>
 
 </ion-tabs>
