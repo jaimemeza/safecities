@@ -8,14 +8,14 @@ export class AuthService {
   userInfo: any = {
     admin: false,
     trust: true,
-    
+
   };
   constructor(
     private fbAuth: AngularFireAuth
   ) { }
 
   signIn(email, pass) {
-    return this.fbAuth.auth.signInWithEmailAndPassword(email,pass);
+    return this.fbAuth.auth.signInWithEmailAndPassword(email, pass);
   }
 
   signOut() {
@@ -36,7 +36,7 @@ export class AuthService {
       photoURL: ""
     })
   }
-  
+
 }
 
 

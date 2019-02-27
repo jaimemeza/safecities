@@ -12,7 +12,7 @@ export class Tab1Page {
   constructor(
     private authServ: AuthService,
     private navCtrl: NavController
-    ) { }
+  ) { }
 
   logout() {
     this.authServ.signOut();
