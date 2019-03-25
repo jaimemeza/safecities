@@ -7,7 +7,8 @@ const routes: Routes = [
   { path: 'intro', loadChildren: './intro/intro.module#IntroPageModule' },
   { path: 'signUp', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'admin', loadChildren: './admin/admin.module#AdminPageModule' },
-  { path: 'add-channel', loadChildren: './add-channel/add-channel.module#AddChannelPageModule' }
+  { path: 'add-channel', loadChildren: './add-channel/add-channel.module#AddChannelPageModule' },
+  { path: 'alert', loadChildren: './alert/alert.module#AlertPageModule' }
 ];
 @NgModule({
   imports: [

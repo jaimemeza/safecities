@@ -8,24 +8,20 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { environment } from '../environments/environment';
+import { IonicStorageModule } from '@ionic/storage';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
-    AngularFireDatabaseModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot({driverOrder: ['sqlite', 'indexeddb', 'localstorage','websql']}),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule
@@ -34,7 +30,6 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    NativeStorage
   ],
   bootstrap: [AppComponent]
 })

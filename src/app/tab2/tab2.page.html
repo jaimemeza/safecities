@@ -1,19 +1,25 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      Contact
+      Alerts
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="logo-ionic" item-start></ion-icon>
-      @safecitiesapp
-    </ion-item>
-  </ion-list>
-</ion-content>
+  <ng-container *ngIf="!this.logic.isEmptyObject(this.logic.savedAlerts)">
+    <ion-list>
+      <ion-item (click)="openAlertCity(alert)" *ngFor="let alert of this.logic.savedAlerts.reverse()">
 
+        <ion-label>
+          <h3>{{ alert.city }}</h3>
+          <p>{{ alert.lastAlert }}</p>
+        </ion-label>
+        <ion-note text-center item-end>
+          <ion-badge>3</ion-badge>
+        </ion-note>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</ion-content>

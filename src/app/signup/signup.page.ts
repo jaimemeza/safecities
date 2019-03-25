@@ -27,10 +27,9 @@ export class SignupPage implements OnInit {
   ngOnInit() {
   }
 
-  async logForm() {
-    await this.authServ.signUp(this.todo.value.email, this.todo.value.password)
-      .then(() => this.authServ.updateProfile(this.todo.value.name))
-      .then(() => this.authServ.sendEmailVerification())
+  logForm() {
+    this.authServ.signUp(this.todo.value.email, this.todo.value.password, this.todo.value.name)
+     
   }
 
   goBack() {

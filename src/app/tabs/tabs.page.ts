@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { LogicService } from '../logic.service';
 
 @Component({
   selector: 'app-tabs',
@@ -8,6 +9,7 @@ import { AuthService } from '../auth.service';
 })
 export class TabsPage {
   constructor(
-    public auth: AuthService
+    public auth: AuthService,
+    public logic: LogicService
   ){}
 }

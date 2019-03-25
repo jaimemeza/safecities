@@ -7,10 +7,12 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let channel of channels">
-      <ion-label>{{ channel }}</ion-label>
-      <ion-button (click)="this.logic.createSubscription(channel)" slot="end">Add</ion-button>
-      <ion-button (click)="this.logic.removeSubscription(channel)" slot="end">Remove</ion-button>
+    <ion-item *ngFor="let channel of channels | keyvalue">
+        <ion-label>{{ channel.key }}</ion-label>
+        <ion-button *ngIf="!channel.value.added" (click)="this.logic.createSubscription(channel.key)" size="small">Add
+        </ion-button>
+        <ion-button *ngIf="channel.value.added" (click)="this.removeSubscription(channel.key)" size="small">Remove
+        </ion-button>
     </ion-item>
 
   </ion-list>

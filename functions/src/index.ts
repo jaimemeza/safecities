@@ -9,11 +9,10 @@ admin.initializeApp();
 // });
 
 export const createUserCollection = functions.auth.user().onCreate((user: any) => {
-        return admin.database().ref(`users/${user.uid}`).set({ 
-                displayName: user.displayName,
+        return admin.database().ref(`users/${user.uid}`).set({
                 email: user.email,
-                admin: false,
-                trust: true,})
+                type: 'user',
+                trustLevel: 2})
         .then()
         .catch(err => console.log(err))
 })

@@ -5,10 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-
   <ion-list>
-
-
     <ion-item>
       <ion-label position="floating">City</ion-label>
       <ion-input #city></ion-input>
@@ -16,10 +13,5 @@
     <ion-button (click)="this.logic.createCity(city.value)"> Create </ion-button>
     <ion-button (click)="this.logic.removeCity(city.value)"> Remove </ion-button>
     <ion-button (click)="this.logic.suspendCity(city.value)"> Suspend </ion-button>
-
-    
-    
   </ion-list>
-
-
 </ion-content>

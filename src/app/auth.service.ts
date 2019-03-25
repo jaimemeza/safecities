@@ -1,37 +1,45 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
+import { environment } from '../environments/environment'
+import 'firebase/database';
+import 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  fb = firebase.initializeApp(environment.firebase);
+  fAuth = firebase.auth();
+  fdb = firebase.database()
   userInfo: any = {
     admin: false,
     trust: true,
 
   };
   constructor(
-    private fbAuth: AngularFireAuth
   ) { }
 
   signIn(email, pass) {
-    return this.fbAuth.auth.signInWithEmailAndPassword(email, pass);
+    return this.fAuth.signInWithEmailAndPassword(email, pass);
   }
 
   signOut() {
-    return this.fbAuth.auth.signOut();
+    return this.fAuth.signOut();
   }
 
-  signUp(email, pass) {
-    return this.fbAuth.auth.createUserWithEmailAndPassword(email, pass);
+  signUp(email, pass, name) {
+    this.fAuth.createUserWithEmailAndPassword(email, pass)
+    .then(snap => console.log(snap))
+    .then(() => this.sendEmailVerification())
+    .then(() => this.signOut());
   }
 
   sendEmailVerification() {
-    return this.fbAuth.auth.currentUser.sendEmailVerification();
+    return this.fAuth.currentUser.sendEmailVerification();
   }
 
   updateProfile(name) {
-    this.fbAuth.auth.currentUser.updateProfile({
+    this.fAuth.currentUser.updateProfile({
       displayName: name,
       photoURL: ""
     })
