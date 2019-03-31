@@ -8,16 +8,17 @@
 
 
 <ion-content>
-  <ng-container *ngIf="!this.logic.isEmptyObject(this.logic.savedAlerts)">
+  <ng-container *ngIf="this.logic.savedAlerts.length">
     <ion-list>
-      <ion-item (click)="openAlertCity(alert)" *ngFor="let alert of this.logic.savedAlerts.reverse()">
+      <ion-item (click)="openAlertCity(i, this.logic.savedAlerts.length, alert.city)" *ngFor="let alert of this.logic.savedAlerts.reverse();let i = index">
 
         <ion-label>
           <h3>{{ alert.city }}</h3>
           <p>{{ alert.lastAlert }}</p>
+          <p>{{ alert.timestamp | date:'medium' }}</p>
         </ion-label>
         <ion-note text-center item-end>
-          <ion-badge>3</ion-badge>
+          <ion-badge *ngIf="alert.unreaded">{{ alert.unreaded }}</ion-badge>
         </ion-note>
       </ion-item>
     </ion-list>

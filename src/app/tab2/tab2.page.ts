@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { AuthService } from '../auth.service';
 import * as firebase from 'firebase/app';
 import 'firebase/database';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -17,7 +18,8 @@ export class Tab2Page implements OnInit, OnDestroy {
     public logic: LogicService,
     private auth: AuthService,
     private storage: Storage,
-    private change: ChangeDetectorRef
+    private change: ChangeDetectorRef,
+    private navCtrl: NavController
   ) {
     this.storage.get('savedAlerts')
       .then(savedAlerts => {
@@ -34,8 +36,10 @@ export class Tab2Page implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  openAlertCity(value) {
-    console.log(value)
+  openAlertCity(index, length, city) {
+    this.logic.updateUnreaded(index);
+    this.logic.savedAlerts[length - index - 1].unreaded = 0;
+    this.navCtrl.navigateForward(`alert/${city}`)
   }
 
 

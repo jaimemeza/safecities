@@ -57,7 +57,7 @@ export class AddChannelPage implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.navCtrl.navigateBack('');
+    this.navCtrl.back();
   }
 
 

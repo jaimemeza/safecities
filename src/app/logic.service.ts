@@ -17,8 +17,8 @@ export class LogicService {
 
   ) { }
   db = firebase.database();
-  alerts: Object;
-  savedAlerts: Array<object>;
+  alerts: Array<any> = [];
+  savedAlerts: Array<any> = [];
   connected: Boolean;
 
 
@@ -69,18 +69,22 @@ export class LogicService {
 
   saveNewAlert(city, alert) {
     this.storage.get('savedAlerts')
-      .then((value: Array<Object>) => {
+      .then((value: Array<any>) => {
+
         let tempObj = {
           city: city,
           lastAlert: alert.body,
-          timestamp: alert.timestamp
+          timestamp: alert.timestamp,
+          unreaded: 1
         }
         if (value) {
-          let index = value.findIndex(obj => obj['city'] == city);
-          console.log(index);
+          let index = value.findIndex(obj => obj['city'] == city) || 0;
+
           if (index === value.length - 1) {
+            tempObj.unreaded = ++value[index].unreaded || 1
             value[index] = tempObj;
           } else if (index >= 0 && index < value.length - 1) {
+            tempObj.unreaded = ++value[index].unreaded || 1
             value[index] = tempObj;
             value.push(value.splice(index, 1)[0])
           } else if (index === -1) {
@@ -88,6 +92,7 @@ export class LogicService {
           }
           this.storage.set('savedAlerts', value).then(newVal => this.savedAlerts = newVal)
         } else {
+          console.log(tempObj)
           this.storage.set('savedAlerts', [tempObj]).then(newVal => this.savedAlerts = newVal)
         }
       })
@@ -105,6 +110,13 @@ export class LogicService {
 
   }
 
+  updateUnreaded(index) {
+    this.storage.get('savedAlerts')
+      .then((value: Array<any>) => {
+        value[index].unreaded = 0
+        this.storage.set('savedAlerts', value)
+      })
+  }
 
 
   isEmptyObject(obj) {
@@ -112,7 +124,7 @@ export class LogicService {
   }
 
 
-  async createToast(msg,color) {
+  async createToast(msg, color) {
     const toast = await this.toast.create({
       message: msg,
       showCloseButton: true,

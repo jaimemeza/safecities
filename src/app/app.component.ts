@@ -19,7 +19,10 @@ import 'firebase/messaging'
 export class AppComponent {
   fdb = firebase.database();
   fAuth = firebase.auth();
-  msg = firebase.messaging();
+  msg;
+  browserNotSupported = false;
+
+
   loader: any;
 
   constructor(
@@ -33,6 +36,10 @@ export class AppComponent {
     private logic: LogicService,
     private storage: Storage
   ) {
+    if (firebase.messaging.isSupported()) {
+      this.msg = firebase.messaging();
+      this.browserNotSupported = true;
+    }
     this.initializeApp();
   }
 
@@ -51,7 +58,11 @@ export class AppComponent {
             email: user.email,
             uid: user.uid
           }
-          this.msg.getToken().then(token => { console.log(token) });
+
+          if (this.browserNotSupported) {
+            this.msg.getToken().then(token => { console.log(token) });
+          }
+
           await this.isTrust(this.authService.userInfo.uid);
           await this.updateName(this.authService.userInfo.uid, this.authService.userInfo.name);
           // Uncomment when run on real device

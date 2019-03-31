@@ -1,9 +1,25 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>alert</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Alert</ion-title>
+
+    <ion-button (click)="goBack()">Back</ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ng-container *ngIf="this.logic.alerts.length">
+    <ion-list>
+      <ion-item  *ngFor="let alert of this.logic.alerts.reverse();let i = index">
 
+        <ion-label>
+          <h3>{{ alert.body }}</h3>
+          <p>{{ alert.timestamp | date:'medium' }}</p>
+          <p>{{  alert.topic }}</p>
+        </ion-label>
+        <!-- <ion-note text-center item-end>
+          <ion-badge *ngIf="alert.unreaded">{{ alert.unreaded }}</ion-badge>
+        </ion-note> -->
+      </ion-item>
+    </ion-list>
+  </ng-container>
 </ion-content>
